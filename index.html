@@ -3,287 +3,322 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>20 Câu Hỏi</title>
+<title>Frustration Game</title>
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
         min-height: 100vh;
-        background: #0b0b10;
+        background: #0a0a0f;
         font-family: 'Segoe UI', system-ui, sans-serif;
         color: #eee;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 20px;
+        overflow: hidden;
+        user-select: none;
     }
     .container {
-        max-width: 460px;
-        width: 100%;
         text-align: center;
+        width: 100%;
+        max-width: 500px;
+        padding: 20px;
     }
     h1 {
-        font-size: 1.5rem;
-        letter-spacing: 2px;
+        font-size: 1.4rem;
+        letter-spacing: 3px;
         margin-bottom: 8px;
-        color: #ddd;
+        color: #ccc;
     }
     .sub {
-        color: #777;
+        color: #666;
         font-size: 0.9rem;
         margin-bottom: 30px;
     }
-    #progress {
+    #stage-info {
         font-size: 1.1rem;
         color: #aaa;
         margin-bottom: 25px;
     }
-    #progress span {
-        color: #00f5d4;
+    #stage-info span {
+        color: #ff4d6d;
         font-weight: 700;
     }
-    #box {
-        background: #13131a;
+    #game-area {
+        background: #12121a;
         border: 1px solid #222;
         border-radius: 16px;
-        padding: 30px 22px;
-        min-height: 300px;
+        height: 360px;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 20px;
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
-    }
-    .question {
-        font-size: 1.25rem;
-        line-height: 1.5;
-        margin-bottom: 28px;
-        color: #e0e0e0;
-    }
-    .options button {
-        display: block;
-        width: 100%;
-        margin: 10px 0;
-        padding: 14px;
-        background: #1c1c26;
-        border: 1px solid #333;
-        color: #eee;
-        border-radius: 12px;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: 0.2s;
-    }
-    .options button:hover {
-        border-color: #00f5d4;
-        color: #00f5d4;
-        background: #1f1f2a;
     }
     .btn {
         background: #1c1c26;
         border: 1px solid #333;
         color: #eee;
-        padding: 13px 36px;
+        padding: 12px 28px;
         border-radius: 50px;
         font-size: 1rem;
         cursor: pointer;
-        margin-top: 10px;
-        transition: 0.25s;
+        transition: 0.2s;
     }
     .btn:hover {
-        border-color: #00f5d4;
-        color: #00f5d4;
+        border-color: #ff4d6d;
+        color: #ff4d6d;
     }
-    #final-box, #result-box {
-        display: none;
+    /* Stage 1 - Button chạy */
+    #run-btn {
+        position: absolute;
+        padding: 14px 26px;
+        background: #ff4d6d;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.15s;
+        z-index: 10;
     }
-    .big-question {
-        font-size: 1.5rem;
-        margin-bottom: 30px;
-        color: #fff;
-        font-weight: 600;
+    /* Stage 2 - Progress troll */
+    #progress-box {
+        width: 80%;
+        text-align: center;
     }
-    .result-text {
-        font-size: 1.6rem;
+    #bar-bg {
+        width: 100%;
+        height: 28px;
+        background: #222;
+        border-radius: 20px;
+        overflow: hidden;
         margin: 20px 0;
-        color: #00f5d4;
-        font-weight: 600;
+    }
+    #bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #ff4d6d, #ff8fa3);
+        transition: width 0.3s;
+    }
+    /* Stage 3 - Tiny button */
+    #tiny-btn {
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        background: #ff4d6d;
+        border-radius: 50%;
+        cursor: pointer;
+        border: none;
+    }
+    #final {
+        display: none;
+        opacity: 0;
+        transition: opacity 1s;
+    }
+    #final.show {
+        display: block;
+        opacity: 1;
+    }
+    .gay-text {
+        font-size: 3.2rem;
+        font-weight: 900;
+        color: #ff4d6d;
+        letter-spacing: 4px;
+        margin: 20px 0;
+        animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.08); }
     }
     .hidden { display: none !important; }
 </style>
 </head>
 <body>
 <div class="container">
-    <h1>20 CÂU HỎI</h1>
-    <p class="sub">Trả lời hết mới được hỏi câu quan trọng</p>
+    <h1>FRUSTRATION PROTOCOL</h1>
+    <p class="sub">Hoàn thành 3 ván ức chế để mở kết quả</p>
 
-    <div id="progress">Câu hỏi: <span id="num">0</span> / 20</div>
+    <div id="stage-info">Ván: <span id="stage-num">1</span> / 3</div>
 
-    <div id="box">
-        <!-- Màn hình bắt đầu -->
+    <div id="game-area">
+        <!-- Start -->
         <div id="start-screen">
-            <div style="font-size: 42px; margin-bottom: 16px">❓</div>
-            <p style="color:#999; margin-bottom: 24px">Sẵn sàng trả lời 20 câu chưa?</p>
-            <button class="btn" onclick="startQuiz()">BẮT ĐẦU</button>
+            <p style="color:#888; margin-bottom:20px">Sẵn sàng bị ức chế chưa?</p>
+            <button class="btn" onclick="startStage1()">BẮT ĐẦU VÁN 1</button>
         </div>
 
-        <!-- Câu hỏi thường -->
-        <div id="quiz-screen" class="hidden">
-            <div class="question" id="q-text"></div>
-            <div class="options" id="options"></div>
-        </div>
+        <!-- Stage 1 -->
+        <button id="run-btn" class="hidden" onclick="completeStage1()">Bấm vào đây</button>
 
-        <!-- Câu cuối -->
-        <div id="final-box" class="hidden">
-            <div class="big-question">Bạn có thích tôi không?</div>
-            <div class="options">
-                <button onclick="showResult(true)">Có</button>
-                <button onclick="showResult(false)">Không</button>
-                <button onclick="showResult('maybe')">Hơi hơi</button>
+        <!-- Stage 2 -->
+        <div id="stage2" class="hidden">
+            <div id="progress-box">
+                <p style="margin-bottom:10px; color:#ccc">Giữ nút để đầy thanh</p>
+                <div id="bar-bg"><div id="bar"></div></div>
+                <button class="btn" id="hold-btn">GIỮ TÔI</button>
+                <p id="stage2-msg" style="margin-top:15px; color:#888; font-size:0.9rem"></p>
             </div>
         </div>
 
-        <!-- Kết quả -->
-        <div id="result-box" class="hidden">
-            <div id="result-text" class="result-text"></div>
-            <p style="color:#777; margin-top:10px" id="result-sub"></p>
-        </div>
+        <!-- Stage 3 -->
+        <button id="tiny-btn" class="hidden"></button>
+        <p id="stage3-text" class="hidden" style="color:#888; position:absolute; top:20px; width:100%; text-align:center">
+            Tìm và bấm vào chấm đỏ siêu nhỏ
+        </p>
+    </div>
+
+    <div id="final">
+        <div class="gay-text">YOU ARE GAY !</div>
+        <p style="color:#666; letter-spacing:2px">Mission Complete</p>
     </div>
 </div>
 
 <script>
-    const questions = [
-        {
-            q: "Trong thời gian qua, bạn thấy tôi như thế nào?",
-            options: ["Bình thường", "Cũng ổn", "Khá thú vị", "Khó hiểu"]
-        },
-        {
-            q: "Bạn có hay nghĩ về tôi không?",
-            options: ["Không bao giờ", "Thỉnh thoảng", "Khá thường xuyên", "Hơi nhiều"]
-        },
-        {
-            q: "Khi nhắn tin với tôi, bạn cảm thấy sao?",
-            options: ["Bình thường", "Thoải mái", "Hơi vui", "Thích"]
-        },
-        {
-            q: "Bạn có muốn tìm hiểu tôi nhiều hơn không?",
-            options: ["Không", "Cũng được", "Có", "Rất muốn"]
-        },
-        {
-            q: "Nếu chúng ta gặp nhau ngoài đời, bạn sẽ?",
-            options: ["Ngại", "Bình thường", "Hào hứng", "Khá mong chờ"]
-        },
-        {
-            q: "Bạn đánh giá độ thú vị của tôi?",
-            options: ["1/10", "5/10", "7/10", "9/10"]
-        },
-        {
-            q: "Bạn có thấy tôi dễ thương không?",
-            options: ["Không", "Bình thường", "Có một chút", "Có"]
-        },
-        {
-            q: "Khi tôi nhắn trước, bạn cảm thấy?",
-            options: ["Phiền", "Bình thường", "Vui", "Khá thích"]
-        },
-        {
-            q: "Bạn có muốn tôi quan tâm bạn nhiều hơn không?",
-            options: ["Không cần", "Cũng được", "Được chứ", "Muốn"]
-        },
-        {
-            q: "Nếu tôi mời bạn đi chơi, bạn sẽ?",
-            options: ["Từ chối", "Suy nghĩ", "Đồng ý", "Rất muốn đi"]
-        },
-        {
-            q: "Bạn có để ý đến tôi không?",
-            options: ["Không", "Hơi hơi", "Có", "Khá để ý"]
-        },
-        {
-            q: "Bạn thấy tính cách tôi thế nào?",
-            options: ["Khó chịu", "Bình thường", "Dễ chịu", "Hợp"]
-        },
-        {
-            q: "Bạn có muốn trò chuyện với tôi lâu hơn không?",
-            options: ["Không", "Cũng được", "Có", "Muốn"]
-        },
-        {
-            q: "Khi thấy tin nhắn của tôi, bạn?",
-            options: ["Lười trả lời", "Trả lời bình thường", "Trả lời khá nhanh", "Hơi mong"]
-        },
-        {
-            q: "Bạn có nghĩ chúng ta hợp nhau không?",
-            options: ["Không", "Chưa biết", "Có thể", "Khá hợp"]
-        },
-        {
-            q: "Bạn có muốn tôi trở thành người đặc biệt không?",
-            options: ["Không", "Chưa chắc", "Có thể", "Muốn thử"]
-        },
-        {
-            q: "Mức độ thiện cảm của bạn với tôi hiện tại?",
-            options: ["Thấp", "Trung bình", "Khá cao", "Cao"]
-        },
-        {
-            q: "Bạn có hay cười khi nói chuyện với tôi không?",
-            options: ["Không", "Hiếm khi", "Thỉnh thoảng", "Khá thường"]
-        },
-        {
-            q: "Nếu tôi biến mất, bạn sẽ?",
-            options: ["Không quan tâm", "Hơi lạ", "Thấy thiếu", "Buồn"]
-        },
-        {
-            q: "Bạn có muốn tiếp tục tìm hiểu tôi không?",
-            options: ["Không", "Tạm thời", "Có", "Rất muốn"]
-        }
-    ];
+    let stage = 1;
 
-    let current = 0;
-
-    function startQuiz() {
+    // ========== STAGE 1: Nút chạy lung tung ==========
+    function startStage1() {
         document.getElementById('start-screen').classList.add('hidden');
-        document.getElementById('quiz-screen').classList.remove('hidden');
-        showQuestion();
+        const btn = document.getElementById('run-btn');
+        btn.classList.remove('hidden');
+        document.getElementById('stage-num').textContent = 1;
+
+        // Nút chạy khi chuột lại gần
+        const area = document.getElementById('game-area');
+        area.addEventListener('mousemove', function(e) {
+            if (stage !== 1) return;
+            const rect = area.getBoundingClientRect();
+            const btnRect = btn.getBoundingClientRect();
+            
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            const btnX = btnRect.left - rect.left + btnRect.width/2;
+            const btnY = btnRect.top - rect.top + btnRect.height/2;
+
+            const dist = Math.hypot(mouseX - btnX, mouseY - btnY);
+
+            if (dist < 120) {
+                // Chạy xa
+                const newX = Math.random() * (area.clientWidth - 140);
+                const newY = Math.random() * (area.clientHeight - 50);
+                btn.style.left = newX + 'px';
+                btn.style.top = newY + 'px';
+            }
+        });
+
+        // Đặt vị trí ban đầu
+        btn.style.left = '50%';
+        btn.style.top = '50%';
+        btn.style.transform = 'translate(-50%, -50%)';
     }
 
-    function showQuestion() {
-        if (current >= 20) {
-            // Hiện câu cuối
-            document.getElementById('quiz-screen').classList.add('hidden');
-            document.getElementById('final-box').classList.remove('hidden');
-            document.getElementById('progress').style.display = 'none';
-            return;
-        }
+    function completeStage1() {
+        stage = 2;
+        document.getElementById('run-btn').classList.add('hidden');
+        document.getElementById('stage-num').textContent = 2;
+        startStage2();
+    }
 
-        document.getElementById('num').textContent = current + 1;
-        const q = questions[current];
-        document.getElementById('q-text').textContent = q.q;
+    // ========== STAGE 2: Thanh tiến độ troll ==========
+    let progress = 0;
+    let holding = false;
+    let holdInterval;
 
-        const optionsDiv = document.getElementById('options');
-        optionsDiv.innerHTML = '';
+    function startStage2() {
+        document.getElementById('stage2').classList.remove('hidden');
+        const holdBtn = document.getElementById('hold-btn');
+        const bar = document.getElementById('bar');
+        const msg = document.getElementById('stage2-msg');
 
-        q.options.forEach((opt) => {
-            const btn = document.createElement('button');
-            btn.textContent = opt;
-            btn.onclick = () => {
-                current++;
-                showQuestion();
-            };
-            optionsDiv.appendChild(btn);
+        holdBtn.addEventListener('mousedown', () => {
+            holding = true;
+            msg.textContent = "Đang giữ...";
+            holdInterval = setInterval(() => {
+                if (holding) {
+                    progress += 1.2;
+                    if (progress > 100) progress = 100;
+                    bar.style.width = progress + '%';
+
+                    // Troll: thỉnh thoảng tụt
+                    if (Math.random() < 0.08 && progress > 20) {
+                        progress -= 18;
+                        if (progress < 0) progress = 0;
+                        bar.style.width = progress + '%';
+                        msg.textContent = "Úi bị tụt rồi 😈";
+                    }
+
+                    if (progress >= 100) {
+                        clearInterval(holdInterval);
+                        completeStage2();
+                    }
+                }
+            }, 50);
+        });
+
+        holdBtn.addEventListener('mouseup', () => {
+            holding = false;
+            clearInterval(holdInterval);
+            msg.textContent = "Thả ra là mất tiến độ nha";
+            // Tụt khi thả
+            progress = Math.max(0, progress - 25);
+            bar.style.width = progress + '%';
+        });
+
+        holdBtn.addEventListener('mouseleave', () => {
+            if (holding) {
+                holding = false;
+                clearInterval(holdInterval);
+                progress = Math.max(0, progress - 30);
+                bar.style.width = progress + '%';
+                msg.textContent = "Rời chuột = tụt mạnh";
+            }
         });
     }
 
-    function showResult(answer) {
-        document.getElementById('final-box').classList.add('hidden');
-        document.getElementById('result-box').classList.remove('hidden');
+    function completeStage2() {
+        stage = 3;
+        document.getElementById('stage2').classList.add('hidden');
+        document.getElementById('stage-num').textContent = 3;
+        startStage3();
+    }
 
-        const resultText = document.getElementById('result-text');
-        const resultSub = document.getElementById('result-sub');
+    // ========== STAGE 3: Nút siêu nhỏ chạy ==========
+    function startStage3() {
+        const tiny = document.getElementById('tiny-btn');
+        const text = document.getElementById('stage3-text');
+        tiny.classList.remove('hidden');
+        text.classList.remove('hidden');
 
-        if (answer === true) {
-            resultText.textContent = "Cảm ơn bạn ❤️";
-            resultSub.textContent = "Mình cũng vậy.";
-        } else if (answer === false) {
-            resultText.textContent = "Không sao đâu";
-            resultSub.textContent = "Cảm ơn bạn đã trả lời thật lòng.";
-        } else {
-            resultText.textContent = "Hơi hơi cũng được";
-            resultSub.textContent = "Từ từ rồi tính tiếp nha.";
+        const area = document.getElementById('game-area');
+
+        function moveTiny() {
+            const x = Math.random() * (area.clientWidth - 20);
+            const y = Math.random() * (area.clientHeight - 20);
+            tiny.style.left = x + 'px';
+            tiny.style.top = y + 'px';
         }
+
+        moveTiny();
+        const moveInterval = setInterval(moveTiny, 700);
+
+        tiny.onclick = () => {
+            clearInterval(moveInterval);
+            tiny.classList.add('hidden');
+            text.classList.add('hidden');
+            showFinal();
+        };
+    }
+
+    function showFinal() {
+        document.getElementById('game-area').style.display = 'none';
+        document.getElementById('stage-info').style.display = 'none';
+        document.querySelector('.sub').style.display = 'none';
+        document.querySelector('h1').style.display = 'none';
+        
+        const final = document.getElementById('final');
+        final.classList.add('show');
     }
 </script>
 </body>
