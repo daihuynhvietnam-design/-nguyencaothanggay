@@ -3,30 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>20 Gifts Challenge</title>
+<title>20 Câu Hỏi</title>
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
         min-height: 100vh;
-        background: #0a0a0f;
+        background: #0b0b10;
         font-family: 'Segoe UI', system-ui, sans-serif;
         color: #eee;
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
-        overflow-x: hidden;
         padding: 20px;
     }
     .container {
-        max-width: 480px;
+        max-width: 460px;
         width: 100%;
         text-align: center;
     }
     h1 {
         font-size: 1.5rem;
-        letter-spacing: 3px;
-        margin-bottom: 6px;
+        letter-spacing: 2px;
+        margin-bottom: 8px;
         color: #ddd;
     }
     .sub {
@@ -35,274 +33,257 @@
         margin-bottom: 30px;
     }
     #progress {
-        font-size: 1.3rem;
-        margin-bottom: 25px;
+        font-size: 1.1rem;
         color: #aaa;
+        margin-bottom: 25px;
     }
     #progress span {
         color: #00f5d4;
         font-weight: 700;
-        font-size: 1.6rem;
     }
-    #encourage {
-        min-height: 28px;
-        margin-bottom: 20px;
-        color: #00f5d4;
-        font-size: 1.05rem;
-        transition: all 0.3s;
-    }
-    #game-box {
-        background: #12121a;
+    #box {
+        background: #13131a;
         border: 1px solid #222;
         border-radius: 16px;
-        padding: 30px 20px;
-        min-height: 280px;
+        padding: 30px 22px;
+        min-height: 300px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        margin-bottom: 20px;
     }
-    .gift {
-        font-size: 60px;
-        cursor: pointer;
-        transition: transform 0.2s;
-        user-select: none;
+    .question {
+        font-size: 1.25rem;
+        line-height: 1.5;
+        margin-bottom: 28px;
+        color: #e0e0e0;
     }
-    .gift:active { transform: scale(0.9); }
-    .btn {
-        background: #1a1a24;
+    .options button {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+        padding: 14px;
+        background: #1c1c26;
         border: 1px solid #333;
         color: #eee;
-        padding: 12px 32px;
+        border-radius: 12px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+    .options button:hover {
+        border-color: #00f5d4;
+        color: #00f5d4;
+        background: #1f1f2a;
+    }
+    .btn {
+        background: #1c1c26;
+        border: 1px solid #333;
+        color: #eee;
+        padding: 13px 36px;
         border-radius: 50px;
         font-size: 1rem;
         cursor: pointer;
-        margin-top: 15px;
+        margin-top: 10px;
         transition: 0.25s;
     }
     .btn:hover {
         border-color: #00f5d4;
         color: #00f5d4;
     }
-    .question {
-        font-size: 1.15rem;
-        line-height: 1.5;
-        margin-bottom: 20px;
-        color: #ddd;
-    }
-    .options button {
-        display: block;
-        width: 100%;
-        margin: 8px 0;
-        padding: 12px;
-        background: #1a1a24;
-        border: 1px solid #333;
-        color: #eee;
-        border-radius: 10px;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: 0.2s;
-    }
-    .options button:hover {
-        border-color: #00f5d4;
-        color: #00f5d4;
-    }
-    #final {
+    #final-box, #result-box {
         display: none;
-        opacity: 0;
-        transition: opacity 1s;
     }
-    #final.show {
-        display: block;
-        opacity: 1;
+    .big-question {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+        color: #fff;
+        font-weight: 600;
     }
-    .final-text {
-        font-size: 2.8rem;
-        font-weight: 800;
-        background: linear-gradient(90deg, #00f5d4, #7b2cbf, #00f5d4);
-        background-size: 200% auto;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: shine 4s linear infinite;
-        letter-spacing: 3px;
+    .result-text {
+        font-size: 1.6rem;
         margin: 20px 0;
-    }
-    @keyframes shine {
-        to { background-position: 200% center; }
+        color: #00f5d4;
+        font-weight: 600;
     }
     .hidden { display: none !important; }
 </style>
 </head>
 <body>
 <div class="container">
-    <h1>20 GIFTS CHALLENGE</h1>
-    <p class="sub">Mở hết 20 phần quà để đến đích</p>
+    <h1>20 CÂU HỎI</h1>
+    <p class="sub">Trả lời hết mới được hỏi câu quan trọng</p>
 
-    <div id="progress">Phần quà: <span id="count">0</span> / 20</div>
-    <div id="encourage">Sẵn sàng chưa?</div>
+    <div id="progress">Câu hỏi: <span id="num">0</span> / 20</div>
 
-    <div id="game-box">
+    <div id="box">
+        <!-- Màn hình bắt đầu -->
         <div id="start-screen">
-            <div style="font-size:50px; margin-bottom:15px">🎁</div>
-            <p style="margin-bottom:20px; color:#aaa">Nhấn bắt đầu để mở phần quà đầu tiên</p>
-            <button class="btn" onclick="nextStage()">BẮT ĐẦU</button>
+            <div style="font-size: 42px; margin-bottom: 16px">❓</div>
+            <p style="color:#999; margin-bottom: 24px">Sẵn sàng trả lời 20 câu chưa?</p>
+            <button class="btn" onclick="startQuiz()">BẮT ĐẦU</button>
         </div>
 
-        <div id="gift-screen" class="hidden">
-            <div class="gift" id="gift-btn" onclick="openGift()">🎁</div>
-            <p style="margin-top:15px; color:#888">Nhấn để mở quà</p>
-        </div>
-
+        <!-- Câu hỏi thường -->
         <div id="quiz-screen" class="hidden">
-            <div class="question" id="question-text"></div>
+            <div class="question" id="q-text"></div>
             <div class="options" id="options"></div>
         </div>
-    </div>
 
-    <div id="final">
-        <div style="font-size:40px; margin-bottom:10px">✅</div>
-        <div class="final-text">MISSION COMPLETE</div>
-        <p style="color:#888; letter-spacing:2px">Bạn đã mở hết 20 phần quà</p>
+        <!-- Câu cuối -->
+        <div id="final-box" class="hidden">
+            <div class="big-question">Bạn có thích tôi không?</div>
+            <div class="options">
+                <button onclick="showResult(true)">Có</button>
+                <button onclick="showResult(false)">Không</button>
+                <button onclick="showResult('maybe')">Hơi hơi</button>
+            </div>
+        </div>
+
+        <!-- Kết quả -->
+        <div id="result-box" class="hidden">
+            <div id="result-text" class="result-text"></div>
+            <p style="color:#777; margin-top:10px" id="result-sub"></p>
+        </div>
     </div>
 </div>
 
 <script>
+    const questions = [
+        {
+            q: "Trong thời gian qua, bạn thấy tôi như thế nào?",
+            options: ["Bình thường", "Cũng ổn", "Khá thú vị", "Khó hiểu"]
+        },
+        {
+            q: "Bạn có hay nghĩ về tôi không?",
+            options: ["Không bao giờ", "Thỉnh thoảng", "Khá thường xuyên", "Hơi nhiều"]
+        },
+        {
+            q: "Khi nhắn tin với tôi, bạn cảm thấy sao?",
+            options: ["Bình thường", "Thoải mái", "Hơi vui", "Thích"]
+        },
+        {
+            q: "Bạn có muốn tìm hiểu tôi nhiều hơn không?",
+            options: ["Không", "Cũng được", "Có", "Rất muốn"]
+        },
+        {
+            q: "Nếu chúng ta gặp nhau ngoài đời, bạn sẽ?",
+            options: ["Ngại", "Bình thường", "Hào hứng", "Khá mong chờ"]
+        },
+        {
+            q: "Bạn đánh giá độ thú vị của tôi?",
+            options: ["1/10", "5/10", "7/10", "9/10"]
+        },
+        {
+            q: "Bạn có thấy tôi dễ thương không?",
+            options: ["Không", "Bình thường", "Có một chút", "Có"]
+        },
+        {
+            q: "Khi tôi nhắn trước, bạn cảm thấy?",
+            options: ["Phiền", "Bình thường", "Vui", "Khá thích"]
+        },
+        {
+            q: "Bạn có muốn tôi quan tâm bạn nhiều hơn không?",
+            options: ["Không cần", "Cũng được", "Được chứ", "Muốn"]
+        },
+        {
+            q: "Nếu tôi mời bạn đi chơi, bạn sẽ?",
+            options: ["Từ chối", "Suy nghĩ", "Đồng ý", "Rất muốn đi"]
+        },
+        {
+            q: "Bạn có để ý đến tôi không?",
+            options: ["Không", "Hơi hơi", "Có", "Khá để ý"]
+        },
+        {
+            q: "Bạn thấy tính cách tôi thế nào?",
+            options: ["Khó chịu", "Bình thường", "Dễ chịu", "Hợp"]
+        },
+        {
+            q: "Bạn có muốn trò chuyện với tôi lâu hơn không?",
+            options: ["Không", "Cũng được", "Có", "Muốn"]
+        },
+        {
+            q: "Khi thấy tin nhắn của tôi, bạn?",
+            options: ["Lười trả lời", "Trả lời bình thường", "Trả lời khá nhanh", "Hơi mong"]
+        },
+        {
+            q: "Bạn có nghĩ chúng ta hợp nhau không?",
+            options: ["Không", "Chưa biết", "Có thể", "Khá hợp"]
+        },
+        {
+            q: "Bạn có muốn tôi trở thành người đặc biệt không?",
+            options: ["Không", "Chưa chắc", "Có thể", "Muốn thử"]
+        },
+        {
+            q: "Mức độ thiện cảm của bạn với tôi hiện tại?",
+            options: ["Thấp", "Trung bình", "Khá cao", "Cao"]
+        },
+        {
+            q: "Bạn có hay cười khi nói chuyện với tôi không?",
+            options: ["Không", "Hiếm khi", "Thỉnh thoảng", "Khá thường"]
+        },
+        {
+            q: "Nếu tôi biến mất, bạn sẽ?",
+            options: ["Không quan tâm", "Hơi lạ", "Thấy thiếu", "Buồn"]
+        },
+        {
+            q: "Bạn có muốn tiếp tục tìm hiểu tôi không?",
+            options: ["Không", "Tạm thời", "Có", "Rất muốn"]
+        }
+    ];
+
     let current = 0;
-    const total = 20;
-    const encourageList = [
-        "Tốt lắm!",
-        "Cứ thế này tiếp tục!",
-        "Bạn đang làm rất tốt!",
-        "Còn một chặng đường nữa thôi!",
-        "Đừng dừng lại nha!",
-        "Tuyệt vời!",
-        "Sắp đến nơi rồi!",
-        "Cố lên, bạn làm được!",
-        "Quá đỉnh!",
-        "Giữ vững phong độ!",
-        "Chỉ còn vài phần nữa!",
-        "Bạn đang tiến rất gần!",
-        "Không được bỏ cuộc!",
-        "Gần về đích rồi!",
-        "Xuất sắc!",
-        "Còn chút nữa thôi!",
-        "Sắp xong rồi!",
-        "Vượt qua được đó!",
-        "Phần cuối rồi nè!",
-        "Chúc mừng, bạn đã hoàn thành!"
-    ];
 
-    // Một số câu đố đơn giản
-    const quizzes = [
-        {
-            q: "Con gì kêu 'meo meo'?",
-            options: ["Chó", "Mèo", "Gà", "Vịt"],
-            answer: 1
-        },
-        {
-            q: "1 + 1 bằng mấy?",
-            options: ["1", "2", "3", "11"],
-            answer: 1
-        },
-        {
-            q: "Màu của bầu trời ban ngày thường là?",
-            options: ["Đỏ", "Xanh", "Vàng", "Đen"],
-            answer: 1
-        },
-        {
-            q: "Con vật nào bay được?",
-            options: ["Cá", "Chim", "Rùa", "Heo"],
-            answer: 1
-        },
-        {
-            q: "Số nào lớn nhất?",
-            options: ["5", "9", "3", "7"],
-            answer: 1
-        },
-        {
-            q: "Ngày có bao nhiêu giờ?",
-            options: ["12", "24", "48", "60"],
-            answer: 1
-        }
-    ];
-
-    function updateProgress() {
-        document.getElementById('count').textContent = current;
-        if (current > 0 && current <= 20) {
-            document.getElementById('encourage').textContent = encourageList[current - 1];
-        }
+    function startQuiz() {
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('quiz-screen').classList.remove('hidden');
+        showQuestion();
     }
 
-    function nextStage() {
-        document.getElementById('start-screen').classList.add('hidden');
-        document.getElementById('quiz-screen').classList.add('hidden');
-        document.getElementById('gift-screen').classList.add('hidden');
-
-        if (current >= total) {
-            showFinal();
+    function showQuestion() {
+        if (current >= 20) {
+            // Hiện câu cuối
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('final-box').classList.remove('hidden');
+            document.getElementById('progress').style.display = 'none';
             return;
         }
 
-        // Xen kẽ: cứ 3 phần quà thì có 1 câu đố
-        if (current > 0 && current % 3 === 0 && quizzes.length > 0) {
-            showQuiz();
-        } else {
-            showGift();
-        }
-    }
+        document.getElementById('num').textContent = current + 1;
+        const q = questions[current];
+        document.getElementById('q-text').textContent = q.q;
 
-    function showGift() {
-        document.getElementById('gift-screen').classList.remove('hidden');
-    }
-
-    function openGift() {
-        current++;
-        updateProgress();
-        
-        // Hiệu ứng đơn giản
-        const gift = document.getElementById('gift-btn');
-        gift.style.transform = 'scale(1.3)';
-        setTimeout(() => {
-            gift.style.transform = 'scale(1)';
-            nextStage();
-        }, 300);
-    }
-
-    function showQuiz() {
-        const quiz = quizzes[Math.floor(Math.random() * quizzes.length)];
-        document.getElementById('question-text').textContent = quiz.q;
         const optionsDiv = document.getElementById('options');
         optionsDiv.innerHTML = '';
 
-        quiz.options.forEach((opt, index) => {
+        q.options.forEach((opt) => {
             const btn = document.createElement('button');
             btn.textContent = opt;
             btn.onclick = () => {
-                if (index === quiz.answer) {
-                    current++;
-                    updateProgress();
-                    nextStage();
-                } else {
-                    document.getElementById('encourage').textContent = "Sai rồi, thử lại nào!";
-                    document.getElementById('encourage').style.color = "#ff6b6b";
-                    setTimeout(() => {
-                        document.getElementById('encourage').style.color = "#00f5d4";
-                        document.getElementById('encourage').textContent = encourageList[Math.max(0, current - 1)];
-                    }, 1200);
-                }
+                current++;
+                showQuestion();
             };
             optionsDiv.appendChild(btn);
         });
-
-        document.getElementById('quiz-screen').classList.remove('hidden');
     }
 
-    function showFinal() {
-        document.getElementById('game-box').style.display = 'none';
-        document.getElementById('progress').style.display = 'none';
-        document.getElementById('encourage').style.display = 'none';
-        document.getElementById('final').classList.add('show');
+    function showResult(answer) {
+        document.getElementById('final-box').classList.add('hidden');
+        document.getElementById('result-box').classList.remove('hidden');
+
+        const resultText = document.getElementById('result-text');
+        const resultSub = document.getElementById('result-sub');
+
+        if (answer === true) {
+            resultText.textContent = "Cảm ơn bạn ❤️";
+            resultSub.textContent = "Mình cũng vậy.";
+        } else if (answer === false) {
+            resultText.textContent = "Không sao đâu";
+            resultSub.textContent = "Cảm ơn bạn đã trả lời thật lòng.";
+        } else {
+            resultText.textContent = "Hơi hơi cũng được";
+            resultSub.textContent = "Từ từ rồi tính tiếp nha.";
+        }
     }
 </script>
 </body>
