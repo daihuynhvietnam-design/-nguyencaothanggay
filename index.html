@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bất Ngờ Dành Cho Em 💕</title>
+    <title>Unlock The Secret</title>
     <style>
         * {
             margin: 0;
@@ -13,155 +13,112 @@
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #1a0a12, #2d0a1e, #1a0a12);
+            background: #0b0b0f;
             font-family: 'Segoe UI', system-ui, sans-serif;
+            color: white;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: white;
             overflow: hidden;
             position: relative;
-        }
-
-        /* Trái tim bay */
-        .floating-heart {
-            position: absolute;
-            font-size: 20px;
-            color: #ff4d6d;
-            opacity: 0.6;
-            animation: float 8s linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% { opacity: 0.7; }
-            90% { opacity: 0.7; }
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-            }
+            user-select: none;
         }
 
         .container {
             text-align: center;
             z-index: 10;
             padding: 20px;
+            width: 100%;
+            max-width: 500px;
         }
 
         h1 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+            color: #e0e0e0;
+            letter-spacing: 3px;
+            font-weight: 500;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        /* SCORE */
+        #score-board {
+            font-size: 1.4rem;
             margin-bottom: 30px;
-            color: #ffb3c1;
-            letter-spacing: 2px;
+            color: #aaa;
         }
 
-        /* Trái tim lớn */
-        .heart-wrapper {
+        #score {
+            color: #00f5d4;
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+
+        /* GAME AREA */
+        #game-area {
             position: relative;
-            width: 220px;
-            height: 220px;
-            margin: 0 auto 40px;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-
-        .heart-wrapper:hover {
-            transform: scale(1.08);
-        }
-
-        .heart {
             width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #ff2e63, #ff6b9d);
-            clip-path: path('M110 190 C 20 100, 20 40, 70 40 C 95 40, 110 65, 110 65 C 110 65, 125 40, 150 40 C 200 40, 200 100, 110 190 Z');
+            height: 320px;
+            background: #121218;
+            border: 1px solid #222;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+
+        #target {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #ff2e63, #ff6b9d);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 40px rgba(255, 46, 99, 0.6);
-            animation: heartbeat 1.4s ease-in-out infinite;
-            position: relative;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(255, 46, 99, 0.5);
+            transition: transform 0.1s;
+            user-select: none;
         }
 
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            15% { transform: scale(1.12); }
-            30% { transform: scale(1); }
-            45% { transform: scale(1.08); }
+        #target:active {
+            transform: scale(0.9);
         }
 
-        .heart-text {
-            font-size: 1.1rem;
-            font-weight: 600;
+        .btn {
+            background: #1a1a22;
+            border: 1px solid #333;
             color: white;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
-            margin-top: 20px;
-        }
-
-        /* Ô nhập mật khẩu */
-        #password-section {
-            display: none;
-            animation: fadeIn 0.6s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        #password-input {
-            padding: 16px 28px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 50px;
-            width: 280px;
-            max-width: 90%;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 2px solid #ff6b9d;
-            outline: none;
-            margin-bottom: 18px;
-        }
-
-        #password-input:focus {
-            box-shadow: 0 0 25px rgba(255, 107, 157, 0.5);
-        }
-
-        #submit-btn {
-            background: linear-gradient(45deg, #ff2e63, #ff6b9d);
-            border: none;
-            padding: 14px 40px;
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: white;
+            padding: 14px 36px;
+            font-size: 1rem;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 8px 25px rgba(255, 46, 99, 0.4);
-            transition: all 0.3s;
+            transition: all 0.25s;
+            letter-spacing: 1px;
         }
 
-        #submit-btn:hover {
-            transform: scale(1.06);
-            box-shadow: 0 12px 30px rgba(255, 46, 99, 0.6);
+        .btn:hover {
+            background: #222;
+            border-color: #00f5d4;
+            color: #00f5d4;
         }
 
-        #error-msg {
-            margin-top: 15px;
-            color: #ff8fa3;
-            font-size: 1rem;
-            min-height: 24px;
+        #start-btn {
+            margin-top: 10px;
         }
 
-        /* Phần I LOVE YOU */
+        /* RESULT */
         #result {
             display: none;
             opacity: 0;
-            transition: opacity 1.2s ease;
+            transition: opacity 1s ease;
         }
 
         #result.show {
@@ -170,45 +127,41 @@
         }
 
         .love-text {
-            font-size: 4.5rem;
-            font-weight: 900;
-            background: linear-gradient(90deg, #ff2e63, #ff85a2, #ff2e63);
+            font-size: 3.8rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #00f5d4, #7b2cbf, #00f5d4);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shine 3s linear infinite, pulse 2s ease-in-out infinite;
-            letter-spacing: 4px;
-            text-shadow: 0 0 40px rgba(255, 46, 99, 0.5);
-            margin-bottom: 20px;
+            animation: shine 4s linear infinite;
+            letter-spacing: 6px;
+            margin-bottom: 15px;
         }
 
         @keyframes shine {
             to { background-position: 200% center; }
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        .result-sub {
+            color: #888;
+            font-size: 1rem;
+            letter-spacing: 2px;
         }
 
-        .sub-text {
-            font-size: 1.3rem;
-            color: #ffb3c1;
-            margin-top: 15px;
-        }
-
-        /* Confetti trái tim */
-        .heart-confetti {
-            position: fixed;
-            font-size: 22px;
+        /* Particles */
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #00f5d4;
+            border-radius: 50%;
             pointer-events: none;
-            z-index: 100;
-            animation: fall 4s linear forwards;
+            animation: particle 0.6s ease-out forwards;
         }
 
-        @keyframes fall {
+        @keyframes particle {
             to {
-                transform: translateY(110vh) rotate(720deg);
+                transform: translate(var(--tx), var(--ty)) scale(0);
                 opacity: 0;
             }
         }
@@ -216,93 +169,109 @@
 </head>
 <body>
     <div class="container">
-        <h1>Dành riêng cho em 💕</h1>
+        <h1>ACCESS REQUIRED</h1>
+        <p class="subtitle">Reach 100 points to unlock</p>
 
-        <!-- Trái tim -->
-        <div class="heart-wrapper" id="heartBtn" onclick="showPassword()">
-            <div class="heart">
-                <div class="heart-text">Nhấn vào đây</div>
-            </div>
+        <div id="score-board">
+            SCORE: <span id="score">0</span> / 100
         </div>
 
-        <!-- Nhập mật khẩu -->
-        <div id="password-section">
-            <input type="text" id="password-input" placeholder="Nhập mật khẩu..." autocomplete="off">
-            <br>
-            <button id="submit-btn" onclick="checkPassword()">Mở bất ngờ</button>
-            <p id="error-msg"></p>
+        <div id="game-area">
+            <div id="target">❤️</div>
         </div>
+
+        <button class="btn" id="start-btn" onclick="startGame()">START GAME</button>
 
         <!-- Kết quả -->
         <div id="result">
             <div class="love-text">I LOVE YOU</div>
-            <p class="sub-text">💕</p>
+            <p class="result-sub">MISSION COMPLETE</p>
         </div>
     </div>
 
     <script>
-        // Tạo trái tim bay
-        function createFloatingHearts() {
-            for (let i = 0; i < 18; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'floating-heart';
-                heart.innerHTML = '❤️';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (Math.random() * 6 + 6) + 's';
-                heart.style.animationDelay = Math.random() * 8 + 's';
-                heart.style.fontSize = (Math.random() * 16 + 14) + 'px';
-                document.body.appendChild(heart);
-            }
-        }
-        createFloatingHearts();
+        let score = 0;
+        let gameRunning = false;
+        let target = document.getElementById('target');
+        let scoreDisplay = document.getElementById('score');
+        let gameArea = document.getElementById('game-area');
+        let startBtn = document.getElementById('start-btn');
 
-        function showPassword() {
-            document.getElementById('heartBtn').style.display = 'none';
-            document.getElementById('password-section').style.display = 'block';
-            document.getElementById('password-input').focus();
+        function startGame() {
+            if (gameRunning) return;
+            
+            score = 0;
+            scoreDisplay.textContent = score;
+            gameRunning = true;
+            startBtn.style.display = 'none';
+            document.getElementById('result').classList.remove('show');
+            
+            moveTarget();
         }
 
-        function checkPassword() {
-            const input = document.getElementById('password-input').value.trim().toLowerCase();
-            const error = document.getElementById('error-msg');
+        function moveTarget() {
+            if (!gameRunning) return;
 
-            if (input === "chuccauthang9") {
-                error.textContent = "";
-                document.getElementById('password-section').style.display = 'none';
-                
-                const result = document.getElementById('result');
-                result.classList.add('show');
-                
-                // Pháo hoa trái tim
-                createHeartConfetti();
-                
-                // Tự động tạo thêm confetti
-                setTimeout(createHeartConfetti, 800);
-                setTimeout(createHeartConfetti, 1600);
+            const areaWidth = gameArea.clientWidth - 70;
+            const areaHeight = gameArea.clientHeight - 70;
+
+            const x = Math.random() * areaWidth;
+            const y = Math.random() * areaHeight;
+
+            target.style.left = x + 'px';
+            target.style.top = y + 'px';
+
+            // Tự động di chuyển sau 1.1 giây nếu không click
+            setTimeout(() => {
+                if (gameRunning) moveTarget();
+            }, 1100);
+        }
+
+        target.addEventListener('click', function(e) {
+            if (!gameRunning) return;
+
+            score += 10;
+            scoreDisplay.textContent = score;
+
+            // Hiệu ứng hạt
+            createParticles(e.clientX, e.clientY);
+
+            // Scale nhỏ khi click
+            target.style.transform = 'scale(0.85)';
+            setTimeout(() => target.style.transform = 'scale(1)', 80);
+
+            if (score >= 100) {
+                gameRunning = false;
+                unlock();
             } else {
-                error.textContent = "Sai mật khẩu rồi 😢 Thử lại nhé";
+                moveTarget();
             }
-        }
-
-        // Cho phép nhấn Enter
-        document.getElementById('password-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') checkPassword();
         });
 
-        function createHeartConfetti() {
-            const hearts = ['❤️', '💕', '💗', '💖', '💘', '💝'];
-            for (let i = 0; i < 40; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'heart-confetti';
-                confetti.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.animationDuration = (Math.random() * 2 + 3) + 's';
-                confetti.style.animationDelay = Math.random() * 0.5 + 's';
-                confetti.style.fontSize = (Math.random() * 18 + 16) + 'px';
-                document.body.appendChild(confetti);
-
-                setTimeout(() => confetti.remove(), 5000);
+        function createParticles(x, y) {
+            for (let i = 0; i < 8; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = x + 'px';
+                p.style.top = y + 'px';
+                
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 30 + Math.random() * 40;
+                p.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+                p.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
+                
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 600);
             }
+        }
+
+        function unlock() {
+            target.style.display = 'none';
+            gameArea.style.display = 'none';
+            document.getElementById('score-board').style.display = 'none';
+            
+            const result = document.getElementById('result');
+            result.classList.add('show');
         }
     </script>
 </body>
